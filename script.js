@@ -48,20 +48,33 @@
   }
 
   /* Carrossel de depoimentos */
-  var testimonials = [
-    { quote: "A terapia com a Fernanda me ajudou a olhar para a minha história com mais clareza e a fazer escolhas que realmente fazem sentido para mim.", name: "Mariana", place: "Portugal" },
-    { quote: "Me senti acolhida, sem julgamentos, e finalmente consegui me conectar com o que realmente quero para a minha vida.", name: "Camila", place: "Itália" },
-    { quote: "O processo me trouxe mais leveza e direção em um momento de muitas dúvidas. Recomendo de coração.", name: "Ana", place: "Brasil" },
-    { quote: "Encontrei um espaço seguro para entender minhas emoções e transformar a forma como vivo minhas escolhas.", name: "Luísa", place: "Espanha" }
+  var testimonialsPT = [
+    { quote: "Eu estava vivendo uma fase de muitas dúvidas e não conseguia organizar o que sentia. A terapia me ajudou a olhar para minhas escolhas com mais clareza e menos culpa.", name: "Gabriel" },
+    { quote: "Morar fora trouxe desafios que eu não esperava. Encontrei na terapia um espaço seguro para entender melhor minha identidade, minhas emoções e o meu lugar nessa nova fase.", name: "Jackie" },
+    { quote: "Cheguei à terapia me sentindo perdido diante de tantas mudanças. Aos poucos, comecei a entender meus padrões e a tomar decisões de forma mais consciente.", name: "Rogério" },
+    { quote: "Foi importante ter alguém que entendesse não só o que eu estava sentindo, mas também o contexto de viver longe do meu país. Saí das sessões com mais clareza e direção.", name: "Ana \uD83E\uDEF6\uD83C\uDFFB" }
+  ];
+
+  var testimonialsEN = [
+    { quote: "I was going through a phase of a lot of doubt and couldn't organize what I was feeling. Therapy helped me look at my choices with more clarity and less guilt.", name: "Gabriel" },
+    { quote: "Living abroad brought challenges I didn't expect. In therapy I found a safe space to better understand my identity, my emotions, and my place in this new phase.", name: "Jackie" },
+    { quote: "I came to therapy feeling lost in the face of so many changes. Little by little, I began to understand my patterns and make decisions more consciously.", name: "Rogério" },
+    { quote: "It was important to have someone who understood not just what I was feeling, but also the context of living far from my country. I left the sessions with more clarity and direction.", name: "Ana \uD83E\uDEF6\uD83C\uDFFB" }
   ];
 
   var track = document.getElementById("testimonial-track");
   var prev = document.getElementById("prev-testimonial");
   var next = document.getElementById("next-testimonial");
   var index = 0;
+  var siteLang = "pt";
 
-  function render() {
+  function currentTestimonials() {
+    return siteLang === "en" ? testimonialsEN : testimonialsPT;
+  }
+
+  function renderTestimonials() {
     if (!track) return;
+    var testimonials = currentTestimonials();
     track.innerHTML = "";
     for (var i = 0; i < 3; i++) {
       var item = testimonials[(index + i) % testimonials.length];
@@ -70,21 +83,60 @@
       card.innerHTML =
         '<p class="font-display text-5xl leading-none text-accent">\u201C</p>' +
         '<p class="min-h-28 text-sm leading-6 text-muted-foreground"></p>' +
-        '<div class="mt-6 border-t border-border pt-4"><p class="text-sm font-semibold"></p><p class="text-xs text-muted-foreground"></p></div>';
+        '<div class="mt-6 border-t border-border pt-4"><p class="text-sm font-semibold"></p></div>';
       var ps = card.querySelectorAll("p");
       ps[1].textContent = item.quote;
       ps[2].textContent = item.name;
-      ps[3].textContent = item.place;
       track.appendChild(card);
     }
   }
 
   function move(step) {
+    var testimonials = currentTestimonials();
     index = (index + step + testimonials.length) % testimonials.length;
-    render();
+    renderTestimonials();
   }
 
   if (prev) prev.addEventListener("click", function () { move(-1); });
   if (next) next.addEventListener("click", function () { move(1); });
-  render();
+
+  /* Alternador global de idioma (PT / EN) */
+  try {
+    var saved = window.localStorage && window.localStorage.getItem("ff-lang");
+    if (saved === "en" || saved === "pt") siteLang = saved;
+  } catch (e) { /* localStorage indisponível, segue com pt */ }
+
+  var langToggle = document.getElementById("lang-toggle");
+  var translatable = Array.prototype.slice.call(document.querySelectorAll("[data-en]"));
+
+  function applyLanguage() {
+    translatable.forEach(function (el) {
+      if (el.dataset.pt === undefined) {
+        el.dataset.pt = el.innerHTML;
+      }
+      el.innerHTML = siteLang === "en" ? el.dataset.en : el.dataset.pt;
+    });
+    document.documentElement.lang = siteLang === "en" ? "en" : "pt-BR";
+    if (langToggle) {
+      langToggle.textContent = siteLang === "en" ? "PT" : "EN";
+      langToggle.setAttribute(
+        "aria-label",
+        siteLang === "en" ? "Mudar para português" : "Switch to English"
+      );
+    }
+    index = 0;
+    renderTestimonials();
+  }
+
+  if (langToggle) {
+    langToggle.addEventListener("click", function () {
+      siteLang = siteLang === "pt" ? "en" : "pt";
+      try {
+        window.localStorage && window.localStorage.setItem("ff-lang", siteLang);
+      } catch (e) { /* localStorage indisponível */ }
+      applyLanguage();
+    });
+  }
+
+  applyLanguage();
 })();
