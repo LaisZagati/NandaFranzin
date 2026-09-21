@@ -52,7 +52,7 @@
     { quote: "Eu estava vivendo uma fase de muitas dúvidas e não conseguia organizar o que sentia. A terapia me ajudou a olhar para minhas escolhas com mais clareza e menos culpa.", name: "Gabriel" },
     { quote: "Morar fora trouxe desafios que eu não esperava. Encontrei na terapia um espaço seguro para entender melhor minha identidade, minhas emoções e o meu lugar nessa nova fase.", name: "Jackie" },
     { quote: "Cheguei à terapia me sentindo perdido diante de tantas mudanças. Aos poucos, comecei a entender meus padrões e a tomar decisões de forma mais consciente.", name: "Rogério" },
-    { quote: "Foi importante ter alguém que entendesse não só o que eu estava sentindo, mas também o contexto de viver longe do meu país. Saí das sessões com mais clareza e direção.", name: "Ana \uD83E\uDEF6\uD83C\uDFFB" }
+    { quote: "Foi importante ter alguém que entendesse não só o que eu estava sentindo, mas também o contexto de viver longe do meu país. Saí das sessões com mais clareza e direção.", name: "Ana" }
   ];
 
   var testimonialsEN = [
