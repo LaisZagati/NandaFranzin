@@ -59,7 +59,7 @@
     { quote: "I was going through a phase of a lot of doubt and couldn't organize what I was feeling. Therapy helped me look at my choices with more clarity and less guilt.", name: "Gabriel" },
     { quote: "Living abroad brought challenges I didn't expect. In therapy I found a safe space to better understand my identity, my emotions, and my place in this new phase.", name: "Jackie" },
     { quote: "I came to therapy feeling lost in the face of so many changes. Little by little, I began to understand my patterns and make decisions more consciously.", name: "Rogério" },
-    { quote: "It was important to have someone who understood not just what I was feeling, but also the context of living far from my country. I left the sessions with more clarity and direction.", name: "Ana \uD83E\uDEF6\uD83C\uDFFB" }
+    { quote: "It was important to have someone who understood not just what I was feeling, but also the context of living far from my country. I left the sessions with more clarity and direction.", name: "Ana" }
   ];
 
   var track = document.getElementById("testimonial-track");
